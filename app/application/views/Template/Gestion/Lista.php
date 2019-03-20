@@ -13,7 +13,7 @@
 		echo btn_add("NL",false,false,false);
 	}
 ?>
-<div class="container  mt-5">
+<div class="container  mt-2 mb-5">
 	<div class="row justify-content-md-center">
 		<div class="col">
 			<div class="row filters uniformidad">

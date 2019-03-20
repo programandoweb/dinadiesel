@@ -51,9 +51,20 @@ $row=$data;
 		        </div>
 					</div>
 	      </div>
+
 	    </div>
 			<div class="col-6">
 				<h3>Servicio</h3>
+				<div class="row ">
+					<div class="col-12">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="far fa-money-bill-alt mr-2"></i> Trabajo a realizar</label>
+							</div>
+							<?php echo set_input("tarea",@$row->tarea,$placeholder='Trabajo a realizar',true,' text-secondary',array());?>
+		        </div>
+					</div>
+	      </div>
 				<div class="row ">
 					<div class="col-12">
 						<div class="input-group mb-3">
@@ -82,26 +93,7 @@ $row=$data;
 		        </div>
 					</div>
 	      </div>
-				<div class="row ">
-					<div class="col-12">
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="far fa-money-bill-alt mr-2"></i> Trabajo a realizar</label>
-							</div>
-							<?php echo set_input("tarea",@$row->tarea,$placeholder='Trabajo a realizar',true,' text-secondary',array());?>
-		        </div>
-					</div>
-	      </div>
-				<div class="row ">
-					<div class="col-12">
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="fas fa-id-card mr-2"></i> Placas 3 últimos dígitos</label>
-							</div>
-							 <?php echo set_input("placa",@$row,$placeholder='Placas 3 últimos dígitos',true,' text-secondary ',array("maxlength"=>"3"));?>
-		        </div>
-					</div>
-	      </div>
+
 				<div class="row ">
 					<div class="col-6">
 						<div class="input-group mb-3">
