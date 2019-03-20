@@ -741,4 +741,21 @@ function MakeUsers($name,$estado=null,$extra=array()){
 	}
 	return form_dropdown($name, $options, $estado,$extra);
 }
+
+function MakeTipoUsuarios($name,$tipo){
+	$ci 	=& 	get_instance();
+	$tabla	=	DB_PREFIJO."tipo_usuarios" ;
+	$rows	=	$ci->db->select("tipo_id,tipo")
+						->from($tabla)
+						->where('estatus',"1")
+						->order_by('tipo','ASC')->get()->result();
+	$option 		= 	array(""=>"Seleccione");
+	foreach($rows as $v){
+		$option[$v->tipo_id] 	= 	$v->tipo;
+	}
+	if(!isset($extra['id'])){
+		$extra['id']	=	$name;
+	}
+	return form_dropdown($name, $option, $tipo,array("class"=>"custom-select mb-2 mr-sm-2 mb-sm-0 browser-default"));
+}
 ?>

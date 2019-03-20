@@ -231,12 +231,14 @@ class Gestion_model extends CI_Model {
 	public function SetUsuarios($var){
 		$return =false;
 		if($var["usuario_id"]==0){
+			$this->return->id		=		$var["usuario_id"];
 			unset($var["usuario_id"]);
 			if($this->db->insert(DB_PREFIJO."usuarios",$var)){
 				$return=true;
 			}
 		}else{
-			$this->db->where("usuario_id",$var["usuario_id"]);
+			$this->return->id		=		$var["usuario_id"];
+			$this->db->where("usuario_id",$var["usuario_id"]);			
 			if($this->db->update(DB_PREFIJO."usuarios",$var)){
 				$return=true;
 			}
