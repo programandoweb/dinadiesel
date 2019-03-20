@@ -121,7 +121,7 @@ class Gestion extends CI_Controller {
     if ($this->input->is_ajax_request() && $this->uri->segment(3)!='Add') {
       /*PARA LLENAR LISTADO*/
       $metodo2=$this->uri->segment(2);
-      echo json_encode(array("data"=>$this->Gestion->$metodo2(get())));
+      echo json_encode(array("draw"=>post("draw"),"recordsTotal"=>$this->Gestion->CountCitas(get()),"recordsFiltered"=>$this->Gestion->CountCitas(get()),"data"=>$this->Gestion->$metodo2(get())));
       return;
 		}else if(!$this->input->is_ajax_request() &&  $this->uri->segment(3)=='Add' &&  !post()){
       /*PARA CARGAR FORMULARIO*/
@@ -164,10 +164,10 @@ class Gestion extends CI_Controller {
         }
         //pre($this->Gestion->return->id);       return;
         $this->session->set_flashdata('success', 'Datos Guardados');
-        redirect("Gestion/Inmuebles/Add/".$this->Gestion->return->id);
+        redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/Add/".$this->Gestion->return->id);
 			}else{
         $this->session->set_flashdata('danger', 'No pudo guardar los datos.');
-        redirect("Gestion/Inmuebles/Add/".$this->Gestion->return->id);
+        redirect($this->uri->segment(1)."/".$this->uri->segment(2)."/Add/".$this->Gestion->return->id);
         return true;
       }
 			return;

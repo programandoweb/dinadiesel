@@ -89,7 +89,7 @@ class Gestion_model extends CI_Model {
 
 	public function GetCitas($id){
 		$tabla	=	DB_PREFIJO."tareas";
-		$this->db->select('prioridad,tarea_id,placa,descripcion_completa,usignado_a_usuario_id,usignado_x_usuario_id, fecha_inicio,fecha_final,estatus,"prueba" as edit');
+		$this->db->select('*,"prueba" as edit');
 		$this->db->from($tabla);
 		$this->db->where("tarea_id",$id);
 		$query	=	$this->db->get();
@@ -134,13 +134,13 @@ class Gestion_model extends CI_Model {
 
 	public function SetCitas($var){
 		$return =false;
-		if($var["id"]==0){
+		if($var["tarea_id"]==0){
 			unset($var["id"]);
 			if($this->db->insert(DB_PREFIJO."tareas",$var)){
 				$return=true;
 			}
 		}else{
-			$this->db->where("id",$var["id"]);
+			$this->db->where("tarea_id",$var["tarea_id"]);
 			if($this->db->update(DB_PREFIJO."tareas",$var)){
 				$return=true;
 			}
@@ -149,11 +149,11 @@ class Gestion_model extends CI_Model {
 	}
 
 	public function Citas($var){
-		$start	=	$var["start"];
-		$length	=	$var["length"];
-		$search	=	$var["search"]["value"];
+		$start			=	$var["start"];
+		$length			=	$var["length"];
+		$search			=	$var["search"]["value"];
 		$key_order	=	@$var["order"][0]["column"];
-		$tabla	=	DB_PREFIJO."tareas t1";
+		$tabla			=	DB_PREFIJO."tareas t1";
 		$this->db->select('CONCAT(nombres," ",apellidos) AS asignado,tarea_id, tipo as tarea ,fecha_inicio,fecha_final,t1.estatus,t1.tarea_id as id,"prueba" as edit');
 		$this->db->from($tabla)->join(DB_PREFIJO."usuarios t2","t1.usignado_a_usuario_id=usuario_id","left");
 		if($search){
@@ -165,6 +165,23 @@ class Gestion_model extends CI_Model {
 		}
 		$query	=	$this->db->get();
 		return foreach_edit($query->result_array());
+	}
+
+	public function CountCitas($var){
+		$search			=	$var["search"]["value"];
+		$tabla			=		DB_PREFIJO."tareas t1";
+		$this->db->select('count(tarea_id) as total');
+		$this->db->from($tabla);
+		if($search){
+				$this->db->where("tarea",$search);
+		}
+		$query	=	$this->db->get();
+		$row=$query->row();
+		if(!empty($row)){
+			return $row->total;
+		}else{
+			return 0;
+		}
 	}
 
 	public function SetCotizaciones($var){

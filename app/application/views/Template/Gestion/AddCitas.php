@@ -6,14 +6,15 @@
 	info@programandoweb.net
 */
 $row=$data;
+//pre($row);
 ?>
-<?php echo form_open_multipart(current_url(),array('ajax' => 'true',"class"=>"form-signin"),array("id"=>$this->uri->segment(4)));	?>
+<?php echo form_open_multipart(current_url(),array('ajaax' => 'true',"class"=>"form-signin"),array("tarea_id"=>$this->uri->segment(4)));	?>
 <div class="container">
 	<div class="card p-5">
 		<div class="row mb-3 justify-content-md-center">
 			<div class="col-6 h6">
 				<div class="btn-group btn-block" role="group" aria-label="Basic example">
-					<button type="submit" class="btn btn-secondary"><i class="fas fa-upload"></i> <?php echo (!isset($row->id))?'Crear':'Actualizar'?> </button>
+					<button type="submit" class="btn btn-secondary"><i class="fas fa-upload"></i> <?php echo (!isset($row->tarea_id))?'Crear':'Actualizar'?> </button>
 					<a href="<?php echo base_url("Gestion/Citas")?>" class="btn btn-danger text-white"><i class="fas fa-ban mr-2"></i> Cancelar</a>
 				</div>
 			</div>
@@ -116,7 +117,7 @@ $row=$data;
 					<div class="col-12">
 		        <div class="md-form mt-0 mb-0">
 		          <?php
-								$data = array('name' => 'descripcion_completa','value' =>@$row->descripcion_completa, 'class' => 'text-secondary md-textarea form-control' ,'rows' => '3','placeholder' => 'Descripción completa', 'cols' => '40','require'=>'true');
+								$data = array('name' => 'descripcion_completa','value' =>@$row->descripcion_completa, 'class' => 'text-secondary md-textarea form-control' ,'rows' => '3','placeholder' => 'Descripción completa', 'cols' => '40');
 								echo form_textarea($data);
 							?>
 		        </div>
