@@ -321,7 +321,7 @@ function set_input($name,$row,$placeholder='',$require=false,$class='',$extra=NU
 	echo form_input($data);
 }
 
-function btn_add($add=true,$print=true,$excel=true,$back=false){
+function btn_add($add=true,$print=true,$excel=true,$back=false,$actives=false){
 	$ci=&get_instance();
 	if($ci->input->is_ajax_request() || $ci->uri->segment(5)=='Iframe'){return;}
 	$return 	=	'<div class="container">';
@@ -345,6 +345,13 @@ function btn_add($add=true,$print=true,$excel=true,$back=false){
 						}
 						if($print){
 							$return 	.=	'<a href="'.current_url().'/Print" title="Procesar Impresión" class="btn btn-primary"><i class="fas fa-print"></i></a>';
+						}
+						if($actives){
+							if(get("estatus")){
+								$return 	.=	'<a href="'.current_url().'" title="Activar todos los registros" class="btn btn-primary"><i class="fas fa-toggle-on"></i></a>';
+							}else{
+								$return 	.=	'<a href="'.current_url().'?estatus=1" title="Desactivar todos los registros" class="btn btn-primary"><i class="fas fa-toggle-off"></i></a>';
+							}
 						}
 						if($excel){
 							$return 	.=	'<a href="'.current_url().'/Excel" title="Exportar a Excel" class="btn btn-primary"><i class="fas fa-file-excel"></i></a>';
@@ -666,6 +673,7 @@ function usuarios_x_token($token){
 function MakeTipoServicio($name,$estado=null){
 
 	$option = array(
+		'' 									=> 'Seleccione',
 		'servicios' 				=> 'Servicios Varios',
 		'mantenimientos'		=> 'Mantenimientos Varios',
 		'reparaciones'			=> 'Reparaciones Mayores',

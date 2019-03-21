@@ -77,6 +77,30 @@ $row=$data;
 					</div>
 	      </div>
 				<div class="row ">
+					<div class="col-12">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="far fa-money-bill-alt mr-2"></i> Sub Servicio</label>
+							</div>
+							<select name="sub_tipo"  class="custom-select mb-2 mr-sm-2 mb-sm-0 browser-default" id="sub_tipo">
+								<option value="">Seleccione</option>
+							</select>
+		        </div>
+					</div>
+	      </div>
+				<div class="row ">
+					<div class="col-12">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="far fa-money-bill-alt mr-2"></i> Servicio Final</label>
+							</div>
+							<select name="sub_tipo_final"  class="custom-select mb-2 mr-sm-2 mb-sm-0 browser-default" id="sub_tipo_final">
+								<option value="">Seleccione</option>
+							</select>
+		        </div>
+					</div>
+	      </div>
+				<div class="row ">
 					<div class="col-6">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
@@ -94,7 +118,6 @@ $row=$data;
 		        </div>
 					</div>
 	      </div>
-
 				<div class="row ">
 					<div class="col-6">
 						<div class="input-group mb-3">
@@ -132,6 +155,45 @@ $row=$data;
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 	$(document).ready(function(){
+		$("#sub_tipo").change(function(){
+			if($(this).val()!=''){
+				$.post("<?php echo base_url("Apirest/Get/Subtipofinal/")?>",{q:$(this).val()},function(data){
+					if(data.data){
+						var html	=		'<option value="" selected="selected">Seleccione</option>';
+						$.each(data.data,function(k,v){
+							html	+=		'<option value="'+v.servicio+'">'+v.servicio+'</option>';
+						});
+						$("#sub_tipo_final").html(html);
+					}
+				},'json');
+			}
+		});
+		$("#tipo").change(function(){
+			if($(this).val()!=''){
+				$.post("<?php echo base_url("Apirest/Get/Subtipo/")?>"+$(this).val(),function(data){
+					if(data.data){
+						var html	=		'<option value="" selected="selected">Seleccione</option>';
+						$.each(data.data,function(k,v){
+							html	+=		'<option value="'+v.servicio+'">'+v.servicio+'</option>';
+						});
+						$("#sub_tipo").html(html);
+					}
+				},'json');
+			}
+		});
+		$("#marca_id").change(function(){
+			if($(this).val()!=''){
+				$.post("<?php echo base_url("Apirest/Get/Modelos/")?>"+$(this).val(),function(data){
+					if(data.data){
+						var html	=		'<option value="" selected="selected">Seleccione</option>';
+						$.each(data.data,function(k,v){
+							html	+=		'<option value="'+v.modelo_id+'">'+v.modelo+'</option>';
+						});
+						$("#modelo_id").html(html);
+					}
+				},'json');
+			}
+		});
 		$( "#fecha_inicio" ).datepicker({ 	minDate: "+1M",
 																				maxDate: "+1M +20D",
 																				beforeShowDay: function(date) {

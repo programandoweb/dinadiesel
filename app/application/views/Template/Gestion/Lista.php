@@ -10,7 +10,7 @@
 <?php
 	//$campo=$data["campos"];
 	if(!empty($this->Breadcrumb)){
-		echo btn_add("NL",false,false,false);
+		echo btn_add("NL",false,false,false,true);
 	}
 ?>
 <div class="container  mt-2 mb-5">
@@ -18,7 +18,7 @@
 		<div class="col">
 			<div class="row filters uniformidad">
 				<div class="col-md-12">
-         	<table id="perfiles" class="display" style="width:100%">
+         	<table id="perfiles" class="display" style="width:100%" >
               <thead>
                   <tr>
                   	<?php

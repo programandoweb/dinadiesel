@@ -513,7 +513,7 @@ function DataTable(){
 	var order	=	$('#perfiles').data("order");
 	var desc	=	$('#perfiles').data("desc");
 	if(!order){order=0;}
-	if(!desc){desc="asc";}else{desc="desc";}
+	if(!desc){desc="desc";}else{desc="desc";}
 	var table		=	$('#perfiles').DataTable({
 		ajax: newURL,
 		"processing": true,
@@ -521,7 +521,7 @@ function DataTable(){
 		"language": {
 			"url": $("body").data("lang")
 		},
-		"order": [[ order, desc ]],
+		"order": [ order, desc ],
 		"columns": descripcion
 	});
 

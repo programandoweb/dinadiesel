@@ -15,6 +15,32 @@ class Gestion_model extends CI_Model {
 		$this->return	=	new stdClass();
 	}
 
+	function GetSubtipoXTipoFinal($tipo_servicio){
+		$tabla	=	DB_PREFIJO."maestro_servicios";
+		$this->db->select('servicio_id,servicio')->from($tabla);
+		$this->db->where("tipo_servicio",$tipo_servicio);
+		//$this->db->where("tipo_servicio!=","");
+		$query	=	$this->db->get();
+		return $query->result();
+	}
+
+	function GetSubtipoXTipo($tipo){
+		$tabla	=	DB_PREFIJO."maestro_servicios";
+		$this->db->select('servicio_id,servicio')->from($tabla);
+		$this->db->where("tipo",$tipo);
+		//$this->db->where("tipo_servicio!=","");
+		$query	=	$this->db->get();
+		return $query->result();
+	}
+
+	function GetModeloXMarca($marca_id){
+		$tabla	=	DB_PREFIJO."maestro_modelo";
+		$this->db->select('modelo_id,modelo')->from($tabla);
+		$this->db->where("marca_id",$marca_id);
+		$query	=	$this->db->get();
+		return $query->result();
+	}
+
 	function CantInmuebles(){
 		$tabla	=	DB_PREFIJO."anuncio";
 		$this->db->select('count(id) as total')->from($tabla);
@@ -159,6 +185,9 @@ class Gestion_model extends CI_Model {
 		if($search){
 		 		$this->db->where("tarea",$search);
 		}
+		if(empty(get("estatus"))){
+		 		$this->db->where("t1.estatus<",9);
+		}
 		$this->db->limit($length,$start);
 		if(isset($var["columns"]) && isset($var["order"])){
 				$this->db->order_by($var["columns"][$key_order]["data"],$var["order"][0]["dir"]);
@@ -238,7 +267,7 @@ class Gestion_model extends CI_Model {
 			}
 		}else{
 			$this->return->id		=		$var["usuario_id"];
-			$this->db->where("usuario_id",$var["usuario_id"]);			
+			$this->db->where("usuario_id",$var["usuario_id"]);
 			if($this->db->update(DB_PREFIJO."usuarios",$var)){
 				$return=true;
 			}
