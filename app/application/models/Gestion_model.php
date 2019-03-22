@@ -163,9 +163,11 @@ class Gestion_model extends CI_Model {
 		if($var["tarea_id"]==0){
 			unset($var["id"]);
 			if($this->db->insert(DB_PREFIJO."tareas",$var)){
+				$this->return->id		= $this->db->insert_id();
 				$return=true;
 			}
 		}else{
+			$this->return->id		=		$var["tarea_id"];
 			$this->db->where("tarea_id",$var["tarea_id"]);
 			if($this->db->update(DB_PREFIJO."tareas",$var)){
 				$return=true;

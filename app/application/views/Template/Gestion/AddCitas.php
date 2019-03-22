@@ -157,7 +157,7 @@ $row=$data;
 	$(document).ready(function(){
 		$("#sub_tipo").change(function(){
 			if($(this).val()!=''){
-				$.post("<?php echo base_url("Apirest/Get/Subtipofinal/")?>",{q:$(this).val()},function(data){
+				$.post("<?php echo base_url("ApiRest/Get/Subtipofinal/")?>",{q:$(this).val()},function(data){
 					if(data.data){
 						var html	=		'<option value="" selected="selected">Seleccione</option>';
 						$.each(data.data,function(k,v){
@@ -170,7 +170,7 @@ $row=$data;
 		});
 		$("#tipo").change(function(){
 			if($(this).val()!=''){
-				$.post("<?php echo base_url("Apirest/Get/Subtipo/")?>"+$(this).val(),function(data){
+				$.post("<?php echo base_url("ApiRest/Get/Subtipo/")?>"+$(this).val(),function(data){
 					if(data.data){
 						var html	=		'<option value="" selected="selected">Seleccione</option>';
 						$.each(data.data,function(k,v){
@@ -183,7 +183,7 @@ $row=$data;
 		});
 		$("#marca_id").change(function(){
 			if($(this).val()!=''){
-				$.post("<?php echo base_url("Apirest/Get/Modelos/")?>"+$(this).val(),function(data){
+				$.post("<?php echo base_url("ApiRest/Get/Modelos/")?>"+$(this).val(),function(data){
 					if(data.data){
 						var html	=		'<option value="" selected="selected">Seleccione</option>';
 						$.each(data.data,function(k,v){
