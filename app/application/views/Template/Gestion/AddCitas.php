@@ -28,7 +28,7 @@ $row=$data;
 							<div class="input-group-prepend">
 								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="fas fa-user mr-2"></i> Solicitante</label>
 							</div>
-							<?php echo MakeUsers("usuario_solicitante",@$row->usuario_solicitante,$extra=array("class"=>"custom-select"));?>
+							<?php echo MakeUsers("usuario_solicitante",@$row->usuario_solicitante,$extra=array("require"=>"require","class"=>"custom-select"));?>
 		        </div>
 					</div>
 	      </div>
