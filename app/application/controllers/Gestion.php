@@ -49,6 +49,29 @@ class Gestion extends CI_Controller {
     }
 	}
 
+  public function Cotizaciones(){
+    $this->Breadcrumb =	'Gestión de Cotizaciones';
+		$this->util->set_title($this->Breadcrumb ." - ".SEO_TITLE);
+
+    switch($this->user->tipo_id){
+      case 0:
+        $this->campos     = array(	"id"=>"ID",
+                                    "placa"=>"Placa",
+                                    "tarea"=>"Tarea",
+                                    "monto"=>"Monto",
+                                    "edit"=>"Acción");
+        $this->exec();
+  		break;
+      case 1:
+      break;
+      case 2:
+      break;
+      default:
+        $this->view("Apanel/User_datos_personales",array( ));
+      break;
+    }
+	}
+
   public function Usuarios(){
     $this->Breadcrumb =	'Gestión de Usuarios';
 		$this->util->set_title($this->Breadcrumb ." - ".SEO_TITLE);

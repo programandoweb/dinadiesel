@@ -766,4 +766,22 @@ function MakeTipoUsuarios($name,$tipo){
 	}
 	return form_dropdown($name, $option, $tipo,array("class"=>"custom-select mb-2 mr-sm-2 mb-sm-0 browser-default"));
 }
+function makeUsuarios($name,$estado=null,$tipo_id,$ente_id=NULL){
+	$ci=&get_instance();
+	$tabla			=	DB_PREFIJO."usuarios";
+	$ci	->db->select("*")->from($tabla)->where_in("tipo_id",$tipo_id);
+	if(!is_null($ente_id)){
+		$ci->db->where("ente_id",$ente_id);
+	}
+	$options	 	=	$ci->db->get()->result();
+	$option 		= 	array(""=>"Seleccione");
+	foreach($options as $v){
+		if(!empty($v->nombres)){
+			$option[$v->usuario_id] 	= 	$v->nombres;
+		}else{
+			$option[$v->usuario_id] 	= 	$v->login;
+		}
+	}
+	return form_dropdown($name, $option, $estado,array("require"=>"require","class"=>"custom-select mb-2 mr-sm-2 mb-sm-0 browser-default","id"=>$name));
+}
 ?>
