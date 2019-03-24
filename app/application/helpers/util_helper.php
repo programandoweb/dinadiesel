@@ -294,7 +294,10 @@ function menu($tipo_id=NULL,$modulos,$no_listas=array()){
 	}
 	return $menu;
 }
-
+function set_input_mix($name,$value,$value2=""){
+	echo set_input("",$value2,'',false,'text-secondary',array("readonly"=>"readonly"));
+	echo form_hidden($name,$value);
+}
 function set_input($name,$row,$placeholder='',$require=false,$class='',$extra=NULL){
 	$data = array(
 		'type' 			=> 	(isset($extra["type"]))?$extra["type"]:'text',
@@ -670,17 +673,31 @@ function usuarios_x_token($token){
 	return $ci->db->select("*")->from($tabla)->where("token",$token)->get()->row();
 }
 
-function MakeTipoServicio($name,$estado=null){
+function getTipo($servicio_id){
+	$tabla	=	DB_PREFIJO."maestro_servicios";
+	$ci	=	&get_instance();
+	return $rows	=	$ci->db->select("*")->from($tabla)->where("servicio_id",$servicio_id)->get()->row();
+}
 
-	$option = array(
-		'' 									=> 'Seleccione',
-		'servicios' 				=> 'Servicios Varios',
-		'mantenimientos'		=> 'Mantenimientos Varios',
-		'reparaciones'			=> 'Reparaciones Mayores',
-		'procura_repuestos' => 'Procura de Partes y repuestos'
-	);
+function getServicio($id){
+	$tabla	=	DB_PREFIJO."maestro_subservicios";
+	$ci	=	&get_instance();
+	return $rows	=	$ci->db->select("*")->from($tabla)->where("id",$id)->get()->row();
+}
 
-	return form_dropdown($name, $option, $estado,array("require"=>"require","class"=>"custom-select mb-2 mr-sm-2 mb-sm-0 browser-default","id"=>$name));
+function MakeTipoServicio($name,$estado=null,$readonly=false){
+	$option = array(''=> 'Selecciones');
+	$tabla	=	DB_PREFIJO."maestro_servicios";
+	$ci	=	&get_instance();
+	$rows	=	$ci->db->select("*")->from($tabla)->where("estatus",1)->get()->result();
+	foreach ($rows as $key => $value) {
+		$option[$value->servicio_id]	=	$value->servicio;
+	}
+	$params	=		array("require"=>"require","class"=>"custom-select mb-2 mr-sm-2 mb-sm-0 browser-default","id"=>$name);
+	if($readonly){
+		$params["disabled"]	=	"disabled";
+	}
+	return form_dropdown($name, $option, $estado,$params);
 }
 
 function MakeEstadoTarea($name,$estado=null,$extra=array()){
@@ -742,7 +759,11 @@ function makeModelo($name,$estado=null,$return=false){
 function MakeUsers($name,$estado=null,$extra=array()){
 	$ci 		=& 	get_instance();
 	$tabla	=		DB_PREFIJO."usuarios";
-	$rows			=		$ci->db->select("usuario_id,CONCAT(nombres,' ',apellidos) as nombres")->from($tabla)->get()->result();
+	$ci->db->select("usuario_id,CONCAT(nombres,' ',apellidos) as nombres")->from($tabla);
+	if(isset($extra["tipo_id"])){
+		$ci->db->where("tipo_id",$extra["tipo_id"]);
+	}
+	$rows			=		$ci->db->get()->result();
 	$options	=		array(""=>"Seleccione");
 	foreach ($rows as $key => $value) {
 		$options[$value->usuario_id]	=		strtoupper($value->nombres);

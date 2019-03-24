@@ -20,7 +20,7 @@ $row=$data;
 			</div>
 		</div>
 		<div class="row ">
-			<div class="col-6 border-primary-right">
+			<div class="col-4 border-primary-right">
 				<h3>Datos del Solicitante</h3>
 				<div class="row ">
 					<div class="col-12">
@@ -28,7 +28,23 @@ $row=$data;
 							<div class="input-group-prepend">
 								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="fas fa-user mr-2"></i> Solicitante</label>
 							</div>
+							<?php if(empty($row)){?>
 							<?php echo MakeUsers("usuario_solicitante",@$row->usuario_solicitante,$extra=array("require"=>"require","class"=>"custom-select"));?>
+						<?php }else{
+								$user_solicitante	=	usuarios_x_id($row->usuario_solicitante);
+								echo set_input("",@$user_solicitante->nombres.' '.@$user_solicitante->apellidos,'',true,' text-secondary ',array("readonly"=>"readonly"));
+							}
+						?>
+		        </div>
+					</div>
+	      </div>
+				<div class="row ">
+					<div class="col-12">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="fas fa-user mr-2"></i> Asignado</label>
+							</div>
+							<?php echo MakeUsers("usignado_a_usuario_id",@$row->usignado_a_usuario_id,$extra=array("class"=>"custom-select","tipo_id"=>3));?>
 		        </div>
 					</div>
 	      </div>
@@ -46,7 +62,7 @@ $row=$data;
 					<div class="col-12">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="fas fa-id-card mr-2"></i> Estatus del Servicio</label>
+								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="fas fa-id-card mr-2"></i> Estatus </label>
 							</div>
 							<?php echo MakeEstadoTarea("estatus",@$row->estatus,$extra=array("class"=>"custom-select"));?>
 		        </div>
@@ -54,25 +70,21 @@ $row=$data;
 	      </div>
 
 	    </div>
-			<div class="col-6">
+			<div class="col-8">
 				<h3>Servicio</h3>
-				<div class="row ">
-					<div class="col-12">
-						<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="far fa-money-bill-alt mr-2"></i> Trabajo a realizar</label>
-							</div>
-							<?php echo set_input("tarea",@$row->tarea,$placeholder='Trabajo a realizar',true,' text-secondary',array());?>
-		        </div>
-					</div>
-	      </div>
 				<div class="row ">
 					<div class="col-12">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="far fa-money-bill-alt mr-2"></i> Tipo de Servicio</label>
 							</div>
-							<?php echo MakeTipoServicio("tipo",@$row->tipo,$extra=array("class"=>"custom-select"));?>
+							<?php if(empty($row)){?>
+							<?php echo MakeTipoServicio("tipo",@$row->tipo);?>
+						<?php	}else{
+								$tipo	=	getTipo($row->tipo);
+								set_input_mix("tipo",@$row->tipo,@$tipo->servicio);
+							}
+						?>
 		        </div>
 					</div>
 	      </div>
@@ -82,9 +94,14 @@ $row=$data;
 							<div class="input-group-prepend">
 								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="far fa-money-bill-alt mr-2"></i> Sub Servicio</label>
 							</div>
-							<select name="sub_tipo"  class="custom-select mb-2 mr-sm-2 mb-sm-0 browser-default" id="sub_tipo">
-								<option value="">Seleccione</option>
-							</select>
+							<?php if(empty($row)){?>
+									<select name="sub_tipo"  class="custom-select mb-2 mr-sm-2 mb-sm-0 browser-default" id="sub_tipo">
+										<option value="">Seleccione</option>
+									</select>
+							<?php	}else{
+								$servicio	=	getServicio($row->sub_tipo);
+								set_input_mix("sub_tipo",@$row->sub_tipo,@$servicio->sub_servicio);
+							}?>
 		        </div>
 					</div>
 	      </div>
@@ -94,9 +111,15 @@ $row=$data;
 							<div class="input-group-prepend">
 								<label class="input-group-text text-white" for="inputGroupSelect01"><i class="far fa-money-bill-alt mr-2"></i> Servicio Final</label>
 							</div>
+							<?php if(empty($row)){?>
 							<select name="sub_tipo_final"  class="custom-select mb-2 mr-sm-2 mb-sm-0 browser-default" id="sub_tipo_final">
 								<option value="">Seleccione</option>
 							</select>
+						<?php	}else{
+								$subserviServicio	=	getServicio($row->sub_tipo_final);
+								set_input_mix("sub_tipo_final",@$row->sub_tipo_final,@$subserviServicio->sub_servicio);
+							}
+						?>
 		        </div>
 					</div>
 	      </div>
@@ -161,7 +184,7 @@ $row=$data;
 					if(data.data){
 						var html	=		'<option value="" selected="selected">Seleccione</option>';
 						$.each(data.data,function(k,v){
-							html	+=		'<option value="'+v.servicio+'">'+v.servicio+'</option>';
+							html	+=		'<option value="'+v.id+'">'+v.sub_servicio+'</option>';
 						});
 						$("#sub_tipo_final").html(html);
 					}
@@ -174,7 +197,7 @@ $row=$data;
 					if(data.data){
 						var html	=		'<option value="" selected="selected">Seleccione</option>';
 						$.each(data.data,function(k,v){
-							html	+=		'<option value="'+v.servicio+'">'+v.servicio+'</option>';
+							html	+=		'<option value="'+v.id+'">'+v.sub_servicio+'</option>';
 						});
 						$("#sub_tipo").html(html);
 					}

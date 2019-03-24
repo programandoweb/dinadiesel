@@ -16,19 +16,19 @@ class Gestion_model extends CI_Model {
 	}
 
 	function GetSubtipoXTipoFinal($tipo_servicio){
-		$tabla	=	DB_PREFIJO."maestro_servicios";
-		$this->db->select('servicio_id,servicio')->from($tabla);
-		$this->db->where("tipo_servicio",$tipo_servicio);
+		$tabla	=	DB_PREFIJO."maestro_subservicios";
+		$this->db->select('id, sub_servicio')->from($tabla);
+		$this->db->where("parent_id",$tipo_servicio);
 		//$this->db->where("tipo_servicio!=","");
 		$query	=	$this->db->get();
 		return $query->result();
 	}
 
 	function GetSubtipoXTipo($tipo){
-		$tabla	=	DB_PREFIJO."maestro_servicios";
-		$this->db->select('servicio_id,servicio')->from($tabla);
-		$this->db->where("tipo",$tipo);
-		//$this->db->where("tipo_servicio!=","");
+		$tabla	=	DB_PREFIJO."maestro_subservicios";
+		$this->db->select('id, sub_servicio')->from($tabla);
+		$this->db->where("servicio_id",$tipo);
+		$this->db->where("parent_id",0);
 		$query	=	$this->db->get();
 		return $query->result();
 	}
