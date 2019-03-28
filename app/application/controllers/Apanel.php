@@ -32,6 +32,10 @@ class Apanel extends CI_Controller {
 			$this->load->view('Template/Apanel/Menu');
 			switch($this->user->tipo_id){
 				case 0:
+          $this->load->model("Gestion_model");
+          $this->Gestion	= 	new Gestion_model();
+          $this->Asignadas  =   $this->Gestion->CitasAsignadas();
+          $this->Culminadas  =   $this->Gestion->CitasCulminadas();
 					$this->load->view('Template/Apanel/Home');
 				break;
 				case 1:

@@ -95,6 +95,8 @@ class Gestion extends CI_Controller {
     }
 	}
 
+
+
   // public function Inmuebles(){
   //   $this->Breadcrumb =	'Gestión de Inmuebles';
 	// 	$this->util->set_title($this->Breadcrumb ." - ".SEO_TITLE);

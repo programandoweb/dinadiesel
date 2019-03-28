@@ -15,7 +15,7 @@ $row=$data;
 			<div class="col-6 h6">
 				<div class="btn-group btn-block" role="group" aria-label="Basic example">
 					<button type="submit" class="btn btn-secondary"><i class="fas fa-upload"></i> <?php echo (!isset($row->tarea_id))?'Crear':'Actualizar'?> </button>
-					<a href="<?php echo base_url("Gestion/Citas")?>" class="btn btn-danger text-white"><i class="fas fa-ban mr-2"></i> Cancelar</a>
+					<a href="<?php echo (isset($_SERVER['HTTP_REFERER']))?$_SERVER['HTTP_REFERER']:base_url("Gestion/Citas")?>" class="btn btn-danger text-white"><i class="fas fa-ban mr-2"></i> Cancelar</a>
 				</div>
 			</div>
 		</div>

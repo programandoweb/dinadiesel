@@ -15,6 +15,24 @@ class Gestion_model extends CI_Model {
 		$this->return	=	new stdClass();
 	}
 
+	function CitasAsignadas($limit=10){
+		$tabla	=	DB_PREFIJO."tareas";
+		$this->db->select('*')->from($tabla);
+		$this->db->where("fecha_final ","NULL");
+		$this->db->limit($limit);
+		$query	=	$this->db->get();
+		return $query->result();
+	}
+
+	function CitasCulminadas($limit=10){
+		$tabla	=	DB_PREFIJO."tareas";
+		$this->db->select('*')->from($tabla);
+		$this->db->where("estatus",2);
+		$this->db->limit($limit);
+		$query	=	$this->db->get();
+		return $query->result();
+	}
+
 	function GetSubtipoXTipoFinal($tipo_servicio){
 		$tabla	=	DB_PREFIJO."maestro_subservicios";
 		$this->db->select('id, sub_servicio')->from($tabla);
